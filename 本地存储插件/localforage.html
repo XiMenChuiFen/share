@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script src="localforage.min.js"></script>
+    <style>
+        body,html{
+            overflow: hidden;
+        }
+        img{
+            height:400px;
+            width:400px;
+        }
+    </style>
+</head>
+<body>
+    <label for="fileImg">选择图片</label>
+    <input type="file" id="fileImg"  hidden>
+    <p id="result"></p>
+<script>
+var eleResult = document.getElementById('result');
+var eleImg = document.createElement('img');
+
+//读取图片
+document.getElementById("fileImg").onchange = function (e) {
+    var file =  event.target.files[0];
+    var loadFile = new FileReader();
+    loadFile.onload = function(){
+        var base64Img=loadFile.result;
+        eleImg.src = base64Img;
+        //本地存储数据
+        localforage.setItem('img', base64Img);
+        eleResult.appendChild(eleImg);
+    }
+    loadFile.readAsDataURL(file);
+};
+
+//获取本地存储数据
+localforage.getItem('img', function (err, value) {
+    if (err == null && value) {
+        eleImg.src = value;
+        console.log(value)
+        eleResult.appendChild(eleImg);
+    }
+});
+//或es6 语法
+// localforage.getItem('img').then(function(value) {
+//     if (value) {
+//         // console.log(value);
+//         eleImg.src = value;
+//         eleResult.appendChild(eleImg);
+//     }
+
+// }).catch(function(err) {
+
+//     console.log(err);
+// })
+
+</script>
+</body>
+</html>
+<!--api 操作https://www.imooc.com/article/67710-->
+<!--实例https://www.zhangxinxu.com/wordpress/2018/06/js-localforage-localstorage-indexdb/-->

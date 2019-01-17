@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+        p{
+            height:30px;
+            line-height: 30px;
+            border-bottom:1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h2><a href="localforage.html"  target= _blank>localforage</a></h2>
+    <p>本地存储数据，先想到的是localStorage，使用很简单。然而，localStorage却有下面一些缺点：</p>
+    <p>1.存储容量限制，大部分浏览器应该最多5M。</p>
+    <p>2.仅支持字符串，如果是存对象还需要将使用JSON.stringify和JSON.parse方法互相转换。</p>
+    <p>3.如果存储数据比较大，例如一张重要图片base64格式存储了，再读可能会有可感知的延迟时间。</p>
+    <p>loaclforage 的作用就是用来规避上面localStorage的缺点, 同时保留localStorage的优点而设计的。</p>
+    <p>localforage 的优点是API非常简单, 使用方便。</p>
+    <p>localforage 的逻辑是: 优先使用IndexDB存储数据, 如果浏览器不支持使用 WebSQL, 如果还是不支持, 使用localStorage。</p>
+    <p>localforage 提供回调 API 同时也支持 ES6 Promises API。</p>
+    <p>存储如下类型的 JavaScript 对象:</p>
+    <ul>
+        <li>Array</li>
+        <li>ArrayBuffer</li>
+        <li>Blob</li>
+        <li>Float32Array</li>
+        <li>Float64Array</li>
+        <li>Int8Array</li>
+        <li>Int16Array</li>
+        <li>Int32Array</li>
+        <li>Number</li>
+        <li>Object</li>
+        <li>Uint8Array</li>
+        <li>Uint8Array</li>
+        <li>Uint8ClampedArray</li>
+        <li>Uint16Array</li>
+        <li>Uint32Array</li>
+        <li>String</li>
+    </ul>
+</body>
+</html>
