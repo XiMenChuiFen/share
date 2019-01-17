@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>demo</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        .box{
+            display: flex;
+            margin-left:20px;
+            margin-bottom:20px;
+            width:1200px;
+        }
+        .block{
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            height:200px;
+            width:200px;
+            font-size:24px;
+        }
+        .block1{
+            background:red;
+        }
+        .block2{
+            background:darkblue;
+        }
+        .block3{
+            background:green;
+        }
+        .block4{
+            background:blue;
+        }
+        .block5{
+            background:orange;
+        }
+        #box2{
+            margin-left:20px;
+            margin-bottom: 20px;
+            width:250px;
+            height:200px;
+        }
+        .block6{
+            background:#ddd;
+        }
+        .img{
+            width:100px;
+            height:100px;
+        }
+        span{
+            font-size:24px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <div class="block block1"><span>一</span></div>
+        <div class="block block2"><span>二</span></div>
+        <div class="block block3"><span>三</span></div>
+        <div class="block block4"><span>四</span></div>
+        <div class="block block5"><span>五</span></div>
+        <div class="block block6">
+            <img src="1.png" alt="img" class="img">
+            <span>六</span>
+        </div>
+    </div>
+    <div id="box2">img: </div>
+    <div id="canvas">canvas: </div>
+</body>
+<script>
+
+    var eleBox = document.getElementById('box');
+    var eleBox2 = document.getElementById('box2');
+    var canvas = document.createElement('canvas');
+    var elecanvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var img = new Image();
+    elecanvas.appendChild(canvas);
+
+    eleBox.addEventListener('click', function (event) {
+        // console.log(event);
+        if (event.target !== this) {
+
+            var style=document.querySelector('style').outerHTML;
+            var height=event.target.offsetHeight;
+            var width=event.target.offsetWidth;
+            var eleHtml=event.target.outerHTML;
+
+            if(event.target.nodeName=='IMG'){
+                // console.log(event.target.outerHTML);
+                // console.log(event.srcElement.currentSrc);
+                img.src=event.srcElement.currentSrc;
+
+            }else{
+
+                if(event.target.querySelector('img')==null){
+
+                    console.log(event.target.querySelector('img'));
+                    img.src=`data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><foreignObject x="0" y="0" width="100%" height="100%"><body xmlns="http://www.w3.org/1999/xhtml">${style}${eleHtml}</body></foreignObject></svg>`;
+
+
+                }
+            }
+            eleBox2.appendChild(img);
+            onload(img);
+
+        }
+
+    });
+
+    function onload(img){
+        img.onload = function () {
+                console.log(this);
+                //设置大小
+                canvas.width = this.width;
+                canvas.height = this.height;
+                context.clearRect(0, 0, this.width, this.height);
+                // canvas绘制
+                context.drawImage(this, 0, 0);
+        }
+    }
+
+    eleBox2.addEventListener('click', function (event) {
+        if(event.target !== this){
+            //下载图片
+            var eleLink = document.createElement('a');
+            eleLink.href = canvas.toDataURL();
+            eleLink.download = new Date().getTime()+'.png';
+            eleLink.click();
+        }
+    })
+</script>
+</html>

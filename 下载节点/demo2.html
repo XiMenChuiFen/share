@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>demo</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        .box{
+            display: flex;
+            margin-left:20px;
+            margin-bottom:20px;
+            width:1200px;
+        }
+        .block{
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            height:200px;
+            width:200px;
+            color:#fff;
+            font-size:24px;
+        }
+        .block1{
+            background:red;
+        }
+        .block2{
+            background:darkblue;
+        }
+        .block3{
+            background:green;
+        }
+        .block4{
+            background:blue;
+        }
+        .block5{
+            background:orange;
+        }
+        #box2{
+            margin-left:20px;
+            width:200px;
+            height:200px;
+        }
+        .block6{
+            background:#ddd;
+        }
+        .block6 img{
+            width:100px;
+            height:100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box" class="box">
+        <div class="block block1">一</div>
+        <div class="block block2">二</div>
+        <div class="block block3">三</div>
+        <div class="block block4">四</div>
+        <div class="block block5">五</div>
+        <div class="block block6">
+            <img src="1.png" alt="img">
+            <span>六</span>
+        </div>
+    </div>
+    <div id="box2"></div>
+</body>
+<script>
+
+    var eleBox = document.getElementById('box');
+    var eleBox2 = document.getElementById('box2');
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    var img = new Image();
+
+    eleBox.addEventListener('click', function (event) {
+        // console.log(event);
+        if (event.target !== this) {
+            console.log(event.target.outerHTML);
+            img.src='data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><foreignObject x="0" y="0" width="100%" height="100%"><body xmlns="http://www.w3.org/1999/xhtml">'+document.querySelector('style').outerHTML+event.target.outerHTML+'</body></foreignObject></svg>';
+
+            eleBox2.appendChild(img);
+            img.onload = function () {
+                console.log(this);
+                //设置大小
+                canvas.width = this.width;
+                canvas.height = this.height;
+                context.clearRect(0, 0, this.width, this.height);
+                // canvas绘制
+                context.drawImage(this, 0, 0);
+                console.log(canvas.toDataURL());
+            }
+
+        }
+
+    });
+
+    eleBox2.addEventListener('click', function (event) {
+        if(event.target !== this){
+            //下载图片
+            var eleLink = document.createElement('a');
+            eleLink.href = canvas.toDataURL();
+            eleLink.download = new Date().getTime()+'.png';
+            eleLink.click();
+        }
+    })
+</script>
+</html>
