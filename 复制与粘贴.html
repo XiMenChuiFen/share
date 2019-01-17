@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+</head>
+<body>
+    <input id="content" value="我是一段文字">
+    <input value="">
+    <button id="copy">复制</button>
+<script>
+    function copy(event) {
+        //创建range对象
+        const range = document.createRange();
+        //selectNode选择选择整个节点，包括子节点 === selectNodeContents 选择节点的子节点
+        range.selectNode(document.getElementById('content'));
+
+        //创建selection对象
+        const selection = window.getSelection();
+
+        //移除所有的range对象
+        if(selection.rangeCount > 0) {
+
+            selection.removeAllRanges()
+        };
+
+        //将range添加到selection
+        selection.addRange(range);
+
+        //复制内容
+        document.execCommand('copy');
+    }
+
+    document.getElementById('copy').addEventListener('click', copy, false);
+</script>
+</body>
+</html>
+<!--range对象-->
+<!--https://www.cnblogs.com/lijinwen/p/6254148.html-->
+<!--selection对象-->
+<!---https://www.cnblogs.com/rainman/archive/2011/02/27/1966482.html-->
